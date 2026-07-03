@@ -1,0 +1,40 @@
+<div class="card">
+  <div class="head">ПРЕИМУЩЕСТВА</div>
+  <img class="product" src="img/studio-round.webp" alt="Стол KONUX, столешница из МДФ">
+
+  <div class="plate p1">
+    <div class="plate-label">МОНОЛИТ</div>
+    <div class="plate-text">цельный торец<br>без наклеенной кромки</div>
+  </div>
+  <div class="plate p2">
+    <div class="plate-label">ЭСТЕТИКА</div>
+    <div class="plate-text">гладкий матовый тон,<br>единый с торцом</div>
+  </div>
+  <div class="plate p3">
+    <div class="plate-label">ПРОЧНОСТЬ</div>
+    <div class="plate-text">плотная плита<br>МДФ 25 мм</div>
+  </div>
+
+  <div class="logo"><span class="logo-mark">GG</span><span class="logo-text">GENGLASS</span></div>
+</div>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+.card { position:relative; width:1500px; height:1875px; overflow:hidden; background:#FFFFFF;
+  font-family:-apple-system,'Segoe UI','Helvetica Neue',Arial,sans-serif; }
+.head { padding-top:96px; text-align:center; font-size:104px; font-weight:800;
+  letter-spacing:2px; color:#161616; }
+.product { position:absolute; left:50%; top:50%; transform:translate(-50%,-45%); width:1750px; }
+.plate { position:absolute; z-index:3; max-width:520px; }
+.plate-label { display:inline-block; background:#E7E7E7; padding:16px 28px;
+  font-size:40px; font-weight:800; letter-spacing:1px; color:#161616; }
+.plate-text { margin-top:16px; font-size:34px; line-height:1.35; color:#3D3D3D; }
+.p1 { left:96px; top:760px; }
+.p2 { left:96px; bottom:270px; }
+.p3 { right:96px; bottom:270px; text-align:right; }
+.p3 .plate-text { text-align:right; }
+.logo { position:absolute; z-index:4; bottom:56px; left:0; right:0;
+  display:flex; align-items:center; justify-content:center; gap:16px; }
+.logo-mark { display:inline-flex; align-items:center; justify-content:center; width:56px; height:56px;
+  border:3px solid #7A7A7A; border-radius:12px; font-size:26px; font-weight:800; color:#6B6B6B; }
+.logo-text { font-size:38px; font-weight:800; color:#6B6B6B; letter-spacing:4px; }
+</style>
