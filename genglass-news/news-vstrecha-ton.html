@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Практическая встреча с GENGLASS в капсуле ТОН · Новости</title>
+<meta name="description" content="8 июля в пространстве ТОН пройдёт камерная практическая встреча для дизайнеров. GENGLASS ведёт тему металл, стекло и зеркала: живые образцы и разбор реального кейса.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#131418; --s1:#1B1D22; --s2:#22242A; --line:#2E3036; --line2:#3C3F47;
+    --ink:#F3F2EF; --ink2:#B4B6B8; --ink3:#888A8D;
+    --gold:#C9A24B; --gold2:#E3C98A; --gold-soft:rgba(201,162,75,.14);
+    --radius:18px; --radius-s:12px; --radius-pill:999px;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 18px 44px rgba(0,0,0,.45);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--gold2)}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  /* top bar */
+  .top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(19,20,24,.86);backdrop-filter:blur(10px);z-index:5}
+  .top-in{max-width:1100px;margin:0 auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-size:13px;font-weight:800;letter-spacing:.2em}
+  .brand b{color:var(--gold)}
+  .top-tag{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+  /* hero */
+  .hero{padding:52px 0 8px}
+  .ey{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+  h1{font-size:clamp(28px,5vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-top:12px}
+  .meta{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--ink3)}
+  .meta span{background:var(--s1);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px;font-weight:600}
+  .lead{margin-top:22px;font-size:18px;line-height:1.62;color:var(--ink2)}
+  .lead b{color:var(--ink);font-weight:600}
+  /* hero image slot */
+  .figure{margin:30px 0 6px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow)}
+  .figure img{width:100%;display:block}
+  .slot{aspect-ratio:16/9;background:repeating-linear-gradient(45deg,rgba(201,162,75,.06) 0 9px,rgba(201,162,75,.015) 9px 18px);display:grid;place-items:center;text-align:center}
+  .slot span{font-size:11px;font-weight:700;letter-spacing:.04em;color:rgba(233,214,180,.62);padding:0 16px;line-height:1.6}
+  .cap{font-size:12px;color:var(--ink3);margin-top:9px}
+  /* body */
+  article{padding:14px 0 10px}
+  article h2{font-size:22px;font-weight:800;letter-spacing:-.01em;margin:38px 0 12px}
+  article h2 .g{color:var(--gold2)}
+  article p{font-size:16.5px;color:var(--ink2);margin-top:14px}
+  article p b{color:var(--ink);font-weight:600}
+  .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line2),transparent);margin:34px 0}
+  ul.list{list-style:none;margin:16px 0 0}
+  ul.list li{position:relative;padding-left:24px;font-size:16px;color:var(--ink2);margin-bottom:13px}
+  ul.list li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+  ul.list li b{color:var(--ink);font-weight:600}
+  /* residents */
+  .res{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap}
+  .resc{flex:1;min-width:220px;background:var(--s1);border:1px solid var(--line);border-radius:var(--radius-s);padding:18px 20px}
+  .resc .rn{font-size:14px;font-weight:800;color:var(--gold2)}
+  .resc .rd{font-size:14px;color:var(--ink2);margin-top:7px}
+  /* details card */
+  .card{background:var(--s1);border:1px solid var(--line);border-radius:var(--radius);padding:8px 24px;margin-top:22px;box-shadow:var(--shadow)}
+  .crow{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .crow:last-child{border-bottom:none}
+  .crow .k{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);width:110px;flex:none;padding-top:2px}
+  .crow .v{font-size:16px;color:var(--ink);font-weight:600}
+  /* cta */
+  .cta-wrap{margin:30px 0 6px;text-align:center}
+  .cta{display:inline-block;text-decoration:none;background:linear-gradient(180deg,#D9B86A,#C29A44);color:#241803;font-size:15px;font-weight:800;letter-spacing:.02em;padding:16px 40px;border-radius:12px;box-shadow:0 10px 26px rgba(201,162,75,.28)}
+  .cta-hint{font-size:13px;color:var(--ink3);margin-top:12px}
+  /* footer */
+  .foot{border-top:1px solid var(--line);margin-top:44px;padding:28px 0 50px}
+  .sign{font-size:14px;color:var(--ink2);line-height:1.7}
+  .sign b{color:var(--ink)}
+  .foot-links{font-size:12.5px;color:var(--ink3);margin-top:14px}
+  @media(max-width:640px){.crow{flex-direction:column;gap:2px}.crow .k{width:auto}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="top-in">
+  <div class="brand">GEN&#8209;GROUP&nbsp;/&nbsp;<b>GENGLASS</b></div>
+  <div class="top-tag">Новости</div>
+</div></header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="ey">Событие · Дизайнерам</div>
+    <h1>Практическая встреча с GENGLASS в капсуле ТОН</h1>
+    <div class="meta">
+      <span>6 июля 2026</span>
+      <span>Пространство ТОН, Москва</span>
+      <span>Для практикующих дизайнеров</span>
+    </div>
+    <p class="lead">8 июля пространство ТОН собирает практикующих дизайнеров на камерную практическую встречу. Три резидента с собственным производством отвечают на вопросы по материалам и изделиям. <b>GENGLASS ведёт тему металл, стекло и зеркала</b>: приносим живые образцы и разбираем реальный кейс, от запроса дизайнера до готового изделия. Для нас это уже четвёртая встреча на площадке ТОН.</p>
+  </section>
+
+  <div class="figure">
+    <div class="slot"><span>ФОТО 16:9 · интерьер с изделиями GENGLASS<br>(стол, зеркала в металлической раме)</span></div>
+  </div>
+  <div class="cap">Пространство ТОН, ЗИЛ. Кадр из реализованного проекта.</div>
+
+  <article>
+    <h2>Что покажем <span class="g">в нашем блоке</span></h2>
+    <p>Формат встречи прикладной: без общих слов, с образцами в руках и техническими параметрами. Разбираем, как запрос дизайнера превращается в изделие и какие нюансы важно заложить на старте проекта.</p>
+    <ul class="list">
+      <li><b>Перегородки и зонирующие системы.</b> Металл и стекло как акцент, необычные фактуры и декоры в наполнении.</li>
+      <li><b>Столы, стеллажи, зеркала.</b> Что делаем на заказ под проект: размер, вид стекла, цвет по каталогу.</li>
+      <li><b>Нержавеющая сталь и нитрид титана.</b> Цветовое разнообразие PVD-покрытия, сталь как акцент в интерьере.</li>
+      <li><b>Душевые из закалённого стекла.</b> Надёжное решение для влажных зон.</li>
+      <li><b>Разбор реального кейса.</b> Показываем, как идея становится изделием, и какие технические детали закладывать заранее.</li>
+    </ul>
+
+    <div class="rule"></div>
+
+    <h2>Кто ещё выступает <span class="g">резиденты ТОН</span></h2>
+    <p>Встреча объединяет три производства без посредников. Каждый отвечает за свою тему.</p>
+    <div class="res">
+      <div class="resc"><div class="rn">SketchingGo</div><div class="rd">Персональные бани, хамамы, сауны и SPA-пространства.</div></div>
+      <div class="resc"><div class="rn">Mulemu</div><div class="rd">Мягкая мебель по индивидуальному заказу с вниманием к эргономике.</div></div>
+    </div>
+
+    <div class="rule"></div>
+
+    <h2>Формат встречи</h2>
+    <p>Камерный разговор для практикующих дизайнеров: живые образцы материалов, технические параметры, примеры реализованных проектов. Вопросы представителям производств напрямую и готовые решения под ваши задачи.</p>
+
+    <div class="card">
+      <div class="crow"><span class="k">Дата</span><span class="v">8 июля 2026, начало в 15:00</span></div>
+      <div class="crow"><span class="k">Место</span><span class="v">Москва, ЗИЛ, ул. Архитектора Щусева, 4к2 (пространство ТОН)</span></div>
+      <div class="crow"><span class="k">Кому</span><span class="v">Практикующим дизайнерам и архитекторам</span></div>
+      <div class="crow"><span class="k">Формат</span><span class="v">Встреча с тремя производителями без посредников</span></div>
+    </div>
+
+    <div class="cta-wrap">
+      <a class="cta" href="https://genglass.ru/" target="_blank" rel="noopener">Зарегистрироваться</a>
+      <div class="cta-hint">Мест немного. Регистрация на странице ТОН.</div>
+    </div>
+  </article>
+
+  <footer class="foot">
+    <p class="sign"><b>GENGLASS</b> (холдинг GEN&#8209;GROUP)<br>Собственное производство: металл, стекло, зеркало. Серийные модели GENGLASS и индивидуальные изделия VALONTI по проектам дизайнеров.</p>
+    <p class="foot-links">genglass.ru · valonti.ru · gen-group.ru</p>
+  </footer>
+
+</main>
+</body>
+</html>
