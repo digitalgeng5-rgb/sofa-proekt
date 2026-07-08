@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ТЗ на монтаж: стеклянная стела в каменную подставку</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0E0F12; --p1:#15171C; --p2:#1A1C22; --line:#262A31; --line2:#333844;
+  --ink:#F2F1ED; --ink2:#ABABA6; --ink3:#71747B;
+  --acc:#C2A878; --acc2:#DcC69A; --key:#7FB48A; --blue:#7E96C4;
+  --hatch:rgba(255,255,255,.045);
+  --radius:16px; --rs:11px;
+}
+:root[data-theme="light"]{
+  --bg:#F1EFE9; --p1:#FFFFFF; --p2:#FAF8F3; --line:#E4E1D8; --line2:#D2CDBF;
+  --ink:#1C1D20; --ink2:#5C5D5A; --ink3:#8C8B84;
+  --acc:#A9884F; --acc2:#8A6E3C; --key:#4E8A5C; --blue:#4E63A0;
+  --hatch:rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme:light){:root:not([data-theme]){
+  --bg:#F1EFE9; --p1:#FFFFFF; --p2:#FAF8F3; --line:#E4E1D8; --line2:#D2CDBF;
+  --ink:#1C1D20; --ink2:#5C5D5A; --ink3:#8C8B84;
+  --acc:#A9884F; --acc2:#8A6E3C; --key:#4E8A5C; --blue:#4E63A0;
+  --hatch:rgba(0,0,0,.05);
+}}
+body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+a{color:var(--acc2)}
+.mono{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.dim{color:var(--ink3)}
+
+/* top */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1120px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:12px;font-weight:800;letter-spacing:.16em}
+.brand b{color:var(--acc)}
+.theme-btn{font:inherit;font-size:12px;font-weight:600;color:var(--ink2);background:var(--p1);border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
+
+/* hero */
+.hero{padding:56px 0 30px}
+.ey{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--ink3)}
+h1{font-size:clamp(30px,5.4vw,58px);font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-top:14px}
+.lead{margin-top:22px;max-width:760px;font-size:17px;line-height:1.62;color:var(--ink2)}
+.lead b{color:var(--ink);font-weight:600}
+.chips{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.chip{background:var(--p1);border:1px solid var(--line);border-radius:999px;padding:9px 17px;font-size:13px;font-weight:700}
+.chip i{font-style:normal;color:var(--ink3);font-weight:500;margin-left:6px}
+.chip.ph{border-style:dashed;color:var(--acc)}
+
+hr.sep{border:0;height:1px;background:var(--line);margin:44px 0}
+
+h2{font-size:clamp(24px,3.4vw,34px);font-weight:800;letter-spacing:-.01em}
+h2 .g{color:var(--acc)}
+.sub{color:var(--ink2);margin-top:10px;max-width:820px;font-size:15px}
+
+/* positioning cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+.card{background:var(--p1);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.card .kick{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);background:color-mix(in srgb,var(--acc) 14%,transparent);display:inline-block;padding:5px 10px;border-radius:6px}
+.card h4{font-size:18px;font-weight:800;margin-top:14px}
+.card p{font-size:14px;color:var(--ink2);margin-top:9px}
+.rule-line{margin-top:22px;background:var(--p2);border:1px solid var(--line);border-radius:var(--rs);padding:14px 18px;font-size:14.5px;color:var(--ink2)}
+.rule-line b{color:var(--acc);font-weight:700}
+
+/* scenes */
+.scene{background:var(--p1);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 8px;margin-top:18px}
+.sc-head{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.sc-n{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.tc{font-size:12px;font-weight:800;background:var(--p2);border:1px solid var(--line2);border-radius:6px;padding:4px 9px;font-variant-numeric:tabular-nums}
+.tag{font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;padding:4px 9px;border-radius:6px}
+.tg-gold{color:var(--acc);background:color-mix(in srgb,var(--acc) 15%,transparent)}
+.tg-neu{color:var(--ink2);background:color-mix(in srgb,var(--ink2) 14%,transparent)}
+.tg-key{color:var(--key);background:color-mix(in srgb,var(--key) 16%,transparent)}
+.sc-title{font-size:21px;font-weight:800;margin-top:13px;letter-spacing:-.01em}
+.sc-narr{font-size:14.5px;color:var(--ink2);margin-top:8px;max-width:840px}
+
+.frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:18px}
+.frames.scroll{display:flex;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity}
+.frames.scroll .fcell{flex:0 0 260px;scroll-snap-align:start}
+.fcell{min-width:0}
+
+.fr{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;text-align:center}
+.fr-foot{background:
+  repeating-linear-gradient(45deg,var(--hatch) 0 8px,transparent 8px 16px),
+  linear-gradient(180deg,#1c1f26,#15181e)}
+:root[data-theme="light"] .fr-foot{background:repeating-linear-gradient(45deg,var(--hatch) 0 8px,transparent 8px 16px),linear-gradient(180deg,#eceae2,#e2dfd5)}
+.fr-graph{background:linear-gradient(180deg,var(--p2),var(--p1))}
+.fr-title{background:radial-gradient(120% 120% at 50% 0,#20232b,#111318)}
+:root[data-theme="light"] .fr-title{background:radial-gradient(120% 120% at 50% 0,#fff,#f2efe7)}
+.fr-lbl{position:absolute;padding:0 14px;font-size:9.5px;font-weight:800;letter-spacing:.05em;color:var(--ink3);line-height:1.5;text-transform:uppercase}
+
+/* overlays */
+.ov{position:absolute;inset:0;display:flex;flex-direction:column;pointer-events:none}
+.ov-center{align-items:center;justify-content:center;text-align:center;padding:12px}
+.ov-btm{justify-content:flex-end;padding:12px}
+.ov-title{font-size:15px;font-weight:800;color:var(--ink);letter-spacing:.02em}
+.ov-sub{font-size:10px;font-weight:600;color:var(--ink2);letter-spacing:.14em;text-transform:uppercase;margin-top:7px}
+.logo-ph{font-size:13px;font-weight:800;letter-spacing:.18em;color:var(--acc);border:1px dashed var(--line2);padding:8px 16px;border-radius:8px}
+.cta-ph{font-size:9.5px;color:var(--ink3);margin-top:10px;max-width:180px}
+.warn{font-size:13px;font-weight:800;color:var(--key);border:1.5px solid var(--key);border-radius:8px;padding:9px 14px;background:color-mix(in srgb,var(--key) 12%,transparent);max-width:82%}
+/* lower third */
+.lt{position:absolute;left:0;right:0;bottom:0;padding:11px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;background:linear-gradient(0deg,rgba(0,0,0,.62),transparent)}
+:root[data-theme="light"] .lt{background:linear-gradient(0deg,rgba(0,0,0,.34),transparent)}
+.lt-bar{width:26px;height:3px;background:var(--acc);border-radius:2px;margin-bottom:2px}
+.lt-txt{font-size:11px;font-weight:700;color:#fff;text-align:left;line-height:1.3}
+.lt-sub{font-size:9px;color:#d8d6cf}
+/* timeline overlay */
+.tl{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%}
+.tl-step{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1}
+.tl-dot{width:9px;height:9px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 25%,transparent)}
+.tl-lb{font-size:8.5px;font-weight:700;color:var(--ink2);text-align:center;line-height:1.3}
+.tl::before{content:"";position:absolute;left:24px;right:24px;top:calc(50% - 10px);height:1px;background:var(--line2)}
+/* drawing */
+.dwg{width:82%;height:auto}
+.dw-stone{fill:color-mix(in srgb,var(--ink3) 34%,transparent);stroke:var(--line2)}
+.dw-slot{fill:var(--bg);stroke:var(--acc);stroke-dasharray:3 2}
+.dw-glass{fill:color-mix(in srgb,var(--blue) 40%,transparent);stroke:var(--blue)}
+.dw-dim{stroke:var(--acc);stroke-width:1}
+.dw-t{fill:var(--ink2);font-size:8px;font-weight:700;text-anchor:middle;font-family:Inter}
+
+.cap{font-size:12.5px;color:var(--ink2);margin-top:9px;line-height:1.5}
+.cap b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* brief details */
+.brief{margin:16px -22px 0;border-top:1px solid var(--line)}
+.brief summary{list-style:none;cursor:pointer;padding:14px 22px;font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);display:flex;align-items:center;gap:10px}
+.brief summary::-webkit-details-marker{display:none}
+.brief summary::before{content:"›";font-size:18px;color:var(--acc);transition:transform .2s}
+.brief[open] summary::before{transform:rotate(90deg)}
+.brief-in{padding:0 22px 18px}
+.brow{display:flex;gap:16px;padding:11px 0;border-top:1px solid var(--line)}
+.brow:first-child{border-top:none}
+.bk{flex:0 0 92px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);padding-top:2px}
+.bv{font-size:14px;color:var(--ink2)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;margin-top:22px;border:1px solid var(--line);border-radius:var(--radius)}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:620px}
+th{text-align:left;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);padding:13px 15px;background:var(--p2);border-bottom:1px solid var(--line)}
+td{padding:11px 15px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.st{font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:5px;white-space:nowrap}
+.st-c{color:var(--blue);background:color-mix(in srgb,var(--blue) 15%,transparent)}
+.st-d{color:var(--acc);background:color-mix(in srgb,var(--acc) 15%,transparent)}
+.st-g{color:var(--key);background:color-mix(in srgb,var(--key) 15%,transparent)}
+
+/* spec grid */
+.spec{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px}
+.spec .box{background:var(--p1);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+.spec h4{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}
+.spec ul{list-style:none;margin-top:12px}
+.spec li{font-size:14px;color:var(--ink2);padding:7px 0 7px 18px;position:relative;border-top:1px solid var(--line)}
+.spec li:first-child{border-top:none}
+.spec li::before{content:"";position:absolute;left:0;top:15px;width:6px;height:6px;border-radius:50%;background:var(--acc)}
+.spec li b{color:var(--ink);font-weight:600}
+.swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.sw{border:1px solid var(--line);border-radius:9px;padding:8px;width:88px;text-align:center;background:var(--p2)}
+.sw .box-c{height:34px;border-radius:5px;border:1px solid var(--line2)}
+.sw .hx{font-size:10.5px;font-weight:700;margin-top:6px;font-variant-numeric:tabular-nums}
+.sw .nm{font-size:9px;color:var(--ink3)}
+
+.note{background:var(--p2);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:var(--rs);padding:15px 18px;margin-top:18px;font-size:14px;color:var(--ink2)}
+.note b{color:var(--ink)}
+
+/* changelog */
+.log{margin-top:22px;display:grid;gap:12px}
+.log .li{background:var(--p1);border:1px solid var(--line);border-radius:var(--rs);padding:14px 18px}
+.log .li .lh{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.log .li p{font-size:13.5px;color:var(--ink2);margin-top:6px}
+.lh.ok{color:var(--key)} .lh.ph{color:var(--acc)} .lh.ask{color:var(--blue)}
+
+.foot{border-top:1px solid var(--line);margin-top:52px;padding:26px 0 60px;font-size:12.5px;color:var(--ink3)}
+
+@media(max-width:760px){.cards{grid-template-columns:1fr}.spec{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="brand">ТЗ · МОНТАЖ · <b>СТЕКЛЯННАЯ СТЕЛА</b></div>
+  <button class="theme-btn" id="themeBtn">Сменить тему</button>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="ey">ТЗ для монтажёра видео · июль 2026 · ревизия 1</div>
+    <h1>Монтаж стеклянной стелы<br>в каменную подставку</h1>
+    <p class="lead">Демонстрационный ролик процесса установки: спокойный монтаж из отснятых с разных ракурсов планов, тихая музыка и текстовые подписи каждого действия. Ролик обязан читаться <b>без звука</b> - весь смысл несут титры. Последовательность и технические детали взяты из двух ваших документов (общий гид по креплениям и пошаговая «Установка в пропил»); ничего сверх них не добавлено. Метод ролика - установка стелы в пропил на полиуретановый герметик.</p>
+    <div class="chips">
+      <span class="chip">16:9 <i>горизонталь</i></span>
+      <span class="chip">~80 сек <i>хронометраж</i></span>
+      <span class="chip">9 сцен · 22 кадра <i>раскадровка</i></span>
+      <span class="chip ph">[ аудитория ] <i>уточнить</i></span>
+      <span class="chip ph">[ площадка ] <i>соцсети / сайт</i></span>
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <h2>Что показываем <span class="g">и в каком порядке</span></h2>
+  <p class="sub">Ролик построен по «скользкой горке»: каждый шаг закрывает одну мысль и подводит к следующему, чтобы досмотрели до результата. Метод один - установка в пропил; способ на крепёж через отверстия вынесен отдельной заметкой ниже.</p>
+  <div class="cards">
+    <div class="card"><span class="kick">Метод ролика</span><h4>Установка в пропил</h4><p>Стела опускается в паз подставки на толстый слой полиуретанового герметика, фиксируется клиньями и уровнем. Основной и самый наглядный способ.</p></div>
+    <div class="card"><span class="kick">Ключевое правило</span><h4>Паз не оставляем сухим</h4><p>Герметик наносится по всей длине паза до установки стекла. Это смысловой центр ролика, на нём делаем акцент-плашку.</p></div>
+    <div class="card"><span class="kick">Тон</span><h4>Спокойно и аккуратно</h4><p>Мемориальный контекст: сдержанный ритм, тихая музыка, чистая работа в кадре. Без резких склеек и рекламного нажима.</p></div>
+  </div>
+  <div class="rule-line">Правило одной строкой: <b>показываем аккуратную установку шаг за шагом; каждый титр - одно короткое действие, читается без звука.</b></div>
+
+  <hr class="sep">
+
+  <h2>Раскадровка <span class="g">22 кадра · 9 сцен</span></h2>
+  <p class="sub">Кадры ниже - схема вёрстки: где футаж (диагональная штриховка = живая съёмка), где титры и в каком углу, где схемы и таймлайны. Пропорции и позиции соблюдать. Полный режиссёрский бриф каждой сцены раскрывается по клику.</p>
+  <div style="text-align:right;margin-top:14px"><button class="theme-btn" id="expandAll">Развернуть все брифы</button></div>
+
+  <section class="scene">
+      <div class="sc-head">
+        <span class="sc-n">Сцена 01</span>
+        <span class="tc">0:00-0:07</span>
+        <span class="tag tg-neu">ИНТРО · COLD OPEN</span>
+      </div>
+      <h3 class="sc-title">Стекло на просвет: тон задаёт материал</h3>
+      <p class="sc-narr">Спокойный вход в кадр: живой блеск стекла и ровный камень раньше любых слов. Зритель настраивается, титров ещё нет.</p>
+      <div class="frames"><div class="fcell"><div class="fr fr-foot"><div class="fr-lbl">МАКРО: СВЕТ ПРОХОДИТ СКВОЗЬ СТЕКЛЯННУЮ СТЕЛУ, ГРАВИРОВКА НА ПРОСВЕТ</div></div><div class="cap"><b>1а · 0:00-0:03.</b> Полный кадр, без титров. Медленное движение света по кромке стекла.</div></div><div class="fcell"><div class="fr fr-foot"><div class="fr-lbl">ОБЩИЙ ПЛАН: ГРАНИТНАЯ ПОДСТАВКА С ПУСТЫМ ПАЗОМ КРУПНО</div></div><div class="cap"><b>1б · 0:03-0:05.</b> Пустой паз в подставке. Камера чуть сверху, медленный наезд.</div></div><div class="fcell"><div class="fr fr-title"><div class="ov ov-center"><div class="logo-ph">[ ЛОГОТИП ]</div><div class="ov-sub">Монтаж стеклянной стелы в подставку</div></div></div><div class="cap"><b>1в · 0:05-0:07.</b> Тайтл-плашка: логотип и название. Появляется мягким проявлением, без резкого fade.</div></div></div>
+      <details class="brief">
+      <summary>Режиссёрский бриф: футаж · моушен · грейдинг</summary>
+      <div class="brief-in">
+        <div class="brow"><span class="bk">Футаж</span><span class="bv">Реальная макросъёмка стекла и камня. Спокойные, длинные планы 3-5 сек, без рук в кадре.</span></div>
+        <div class="brow"><span class="bk">Моушен</span><span class="bv">Медленные наезды и проезды. Переход к тайтлу - мягкое проявление (0.6 сек), без вспышек.</span></div>
+        <div class="brow"><span class="bk">Грейдинг</span><span class="bv">Нейтральный холодноватый грейд, глубокий графит в тенях, естественный блеск стекла. Без тёплого пятна.</span></div>
+      </div>
+    </details>
+    </section>
+<section class="scene">
+      <div class="sc-head">
+        <span class="sc-n">Сцена 02</span>
+        <span class="tc">0:07-0:18</span>
+        <span class="tag tg-gold">ШАГ 1 · ПОДГОТОВКА</span>
+      </div>
+      <h3 class="sc-title">Готовим паз: основание должно быть ровным</h3>
+      <p class="sc-narr">Первый смысловой блок: почему всё начинается с камня. Ровное основание паза - условие того, что стела встанет без перекоса.</p>
+      <div class="frames"><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Паз режем на станке. Основание ровное.</div></div><div class="fr-lbl">ЦЕХ: ФРЕЗЕРНЫЙ СТАНОК РЕЖЕТ ПАЗ В ПОДСТАВКЕ</div></div><div class="cap"><b>2а · 0:07-0:11.</b> Механизированный пропил на станке. Титр входит снизу, набор букв слева направо.</div></div><div class="fcell"><div class="fr fr-graph"><div class="ov ov-center"><svg viewBox="0 0 260 150" class="dwg"><rect x="30" y="70" width="200" height="60" class="dw-stone"/><rect x="120" y="40" width="20" height="60" class="dw-slot"/><line x1="112" y1="40" x2="112" y2="70" class="dw-dim"/><line x1="148" y1="40" x2="148" y2="70" class="dw-dim"/><text x="130" y="30" class="dw-t">стекло + 2 мм с каждой стороны</text><text x="130" y="145" class="dw-t">глубина паза 3-9 см</text></svg></div></div><div class="cap"><b>2б · 0:11-0:15.</b> Схема-сечение: ширина паза равна толщине стекла плюс зазор 2 мм с каждой стороны.</div></div><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Очищаем паз от пыли.</div></div><div class="fr-lbl">МАКРО: ОБЕСПЫЛИВАНИЕ И ОЧИСТКА ПАЗА</div></div><div class="cap"><b>2в · 0:15-0:18.</b> Продувка и очистка паза. Короткий план, подводит к нанесению герметика.</div></div></div>
+      <details class="brief">
+      <summary>Режиссёрский бриф: футаж · моушен · грейдинг</summary>
+      <div class="brief-in">
+        <div class="brow"><span class="bk">Футаж</span><span class="bv">Съёмка в цеху: станок, зачистка. Если станка нет в футаже - крупный план ровного дна паза + схема.</span></div>
+        <div class="brow"><span class="bk">Моушен</span><span class="bv">Схема-сечение отрисовывается линиями за 0.8 сек. Размерные стрелки появляются последними.</span></div>
+        <div class="brow"><span class="bk">Грейдинг</span><span class="bv">Нейтральный цех, без синевы ламп. Схема - в цветах граф-кита, тонкие линии.</span></div>
+      </div>
+    </details>
+    </section>
+<section class="scene">
+      <div class="sc-head">
+        <span class="sc-n">Сцена 03</span>
+        <span class="tc">0:18-0:26</span>
+        <span class="tag tg-gold">ШАГ 2 · ПОРЯДОК</span>
+      </div>
+      <h3 class="sc-title">Сначала подставка, стекло позже</h3>
+      <p class="sc-narr">Снимаем частый вопрос: почему нельзя ставить всё сразу. Подставка и цветник встают первыми, стекло - только после выдержки.</p>
+      <div class="frames"><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Ставим подставку и цветник.</div></div><div class="fr-lbl">ФУТАЖ: УСТАНОВКА ПОДСТАВКИ И ЦВЕТНИКА НА ПЛОЩАДКУ</div></div><div class="cap"><b>3а · 0:18-0:22.</b> Монтаж подставки с пазом и цветника. Спокойный общий план.</div></div><div class="fcell"><div class="fr fr-graph"><div class="ov ov-btm"><div class="tl"><div class="tl-step"><span class="tl-dot"></span><span class="tl-lb">День 1: подставка и цветник</span></div><div class="tl-step"><span class="tl-dot"></span><span class="tl-lb">выдержка 2-3 дня</span></div><div class="tl-step"><span class="tl-dot"></span><span class="tl-lb">День 4: стекло</span></div></div></div></div><div class="cap"><b>3б · 0:22-0:26.</b> Графика-таймлайн: стекло ставим через 2-3 дня после подставки.</div></div></div>
+      <details class="brief">
+      <summary>Режиссёрский бриф: футаж · моушен · грейдинг</summary>
+      <div class="brief-in">
+        <div class="brow"><span class="bk">Футаж</span><span class="bv">Реальная установка подставки. Цветник и подставка - в одном плане, чтобы читалась последовательность.</span></div>
+        <div class="brow"><span class="bk">Моушен</span><span class="bv">Таймлайн выезжает слева направо, точки загораются по очереди. Темп спокойный.</span></div>
+        <div class="brow"><span class="bk">Грейдинг</span><span class="bv">Естественный дневной свет площадки, без пересветов на граните.</span></div>
+      </div>
+    </details>
+    </section>
+<section class="scene">
+      <div class="sc-head">
+        <span class="sc-n">Сцена 04</span>
+        <span class="tc">0:26-0:36</span>
+        <span class="tag tg-key">ШАГ 3 · ГЕРМЕТИК</span>
+      </div>
+      <h3 class="sc-title">Ключевой шаг: паз не оставляем сухим</h3>
+      <p class="sc-narr">Самый важный смысловой момент ролика. Толстый слой полиуретанового герметика по всей длине паза, и жёсткое правило: сухой паз недопустим.</p>
+      <div class="frames"><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Наносим полиуретановый герметик по всей длине паза.</div></div><div class="fr-lbl">МАКРО: ТОЛСТЫЙ СЛОЙ ГЕРМЕТИКА ПО ВСЕЙ ДЛИНЕ ПАЗА</div></div><div class="cap"><b>4а · 0:26-0:31.</b> Крупный план нанесения. Виден равномерный толстый валик герметика.</div></div><div class="fcell"><div class="fr fr-graph"><div class="ov ov-center"><div class="warn">Стекло в сухой паз не опускаем</div></div></div><div class="cap"><b>4б · 0:31-0:36.</b> Акцент-плашка с правилом. Короткая пауза, титр читается спокойно.</div></div></div>
+      <details class="brief">
+      <summary>Режиссёрский бриф: футаж · моушен · грейдинг</summary>
+      <div class="brief-in">
+        <div class="brow"><span class="bk">Футаж</span><span class="bv">Макро нанесения герметика (Soudal или аналог). Тюбик/пистолет в кадре допустим, без грязных рук.</span></div>
+        <div class="brow"><span class="bk">Моушен</span><span class="bv">Плашка-правило появляется без резкости, лёгкое увеличение кегля на 3%. Никаких восклицаний в графике.</span></div>
+        <div class="brow"><span class="bk">Грейдинг</span><span class="bv">Тёплый нейтраль на герметике, чтобы читался объём валика. Фон приглушён.</span></div>
+      </div>
+    </details>
+    </section>
+<section class="scene">
+      <div class="sc-head">
+        <span class="sc-n">Сцена 05</span>
+        <span class="tc">0:36-0:48</span>
+        <span class="tag tg-gold">ШАГ 4 · УСТАНОВКА</span>
+      </div>
+      <h3 class="sc-title">Опускаем стелу ровно и фиксируем</h3>
+      <p class="sc-narr">Кульминация процесса: стела входит в паз. Ровно, по уровню, с временной фиксацией - зритель видит аккуратность работы.</p>
+      <div class="frames"><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Ровно, без перекосов опускаем стелу.</div></div><div class="fr-lbl">ФУТАЖ: СТЕЛУ РОВНО ОПУСКАЮТ В ПАЗ (ДВЕ РУКИ, АККУРАТНО)</div></div><div class="cap"><b>5а · 0:36-0:40.</b> Основной план установки. Медленное, уверенное движение вниз.</div></div><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Выставляем по уровню, фиксируем клиньями.</div></div><div class="fr-lbl">МАКРО: УРОВЕНЬ НА КРОМКЕ + ДЕРЕВЯННЫЕ КЛИНЬЯ</div></div><div class="cap"><b>5б · 0:40-0:44.</b> Пузырьковый уровень и деревянные клинья по бокам. Крупно.</div></div><div class="fcell"><div class="fr fr-foot"><div class="fr-lbl">ФУТАЖ: ПРОРЕЗЬ ПРИЖАТА ПЛАСТИКОМ И МАЛЯРНЫМ СКОТЧЕМ</div></div><div class="cap"><b>5в · 0:44-0:48.</b> Боковой зазор прижат пластиком и зафиксирован скотчем.</div></div></div>
+      <details class="brief">
+      <summary>Режиссёрский бриф: футаж · моушен · грейдинг</summary>
+      <div class="brief-in">
+        <div class="brow"><span class="bk">Футаж</span><span class="bv">Три ракурса одного действия: общий, макро уровня, деталь фиксации. Не повторять один и тот же план.</span></div>
+        <div class="brow"><span class="bk">Моушен</span><span class="bv">Склейки в такт музыке, но мягкие. Титр-подпись держится не меньше 2.5 сек.</span></div>
+        <div class="brow"><span class="bk">Грейдинг</span><span class="bv">Единый нейтральный грейд, ровная экспозиция на стекле без бликов-пересветов.</span></div>
+      </div>
+    </details>
+    </section>
+<section class="scene">
+      <div class="sc-head">
+        <span class="sc-n">Сцена 06</span>
+        <span class="tc">0:48-0:58</span>
+        <span class="tag tg-gold">ШАГ 5 · ШОВ</span>
+      </div>
+      <h3 class="sc-title">Заполняем паз и снимаем излишки</h3>
+      <p class="sc-narr">Работа приобретает законченный вид: паз заполнен до верха, стык заглажен, лишний герметик убран растворителем.</p>
+      <div class="frames"><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Заполняем паз герметиком.</div></div><div class="fr-lbl">МАКРО: ЗАПОЛНЕНИЕ ПАЗА ГЕРМЕТИКОМ ДО ВЕРХА</div></div><div class="cap"><b>6а · 0:48-0:53.</b> Паз заполняется по всей длине. Виден ровный уровень шва.</div></div><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Излишки убираем растворителем.</div></div><div class="fr-lbl">МАКРО: ЗАГЛАЖИВАНИЕ СТЫКА, СНЯТИЕ ИЗЛИШКОВ РАСТВОРИТЕЛЕМ</div></div><div class="cap"><b>6б · 0:53-0:58.</b> Аккуратный шов у стекла. Чистая линия стыка крупным планом.</div></div></div>
+      <details class="brief">
+      <summary>Режиссёрский бриф: футаж · моушен · грейдинг</summary>
+      <div class="brief-in">
+        <div class="brow"><span class="bk">Футаж</span><span class="bv">Два макро-плана: заполнение и финишная зачистка шва. Чистые руки, аккуратная работа.</span></div>
+        <div class="brow"><span class="bk">Моушен</span><span class="bv">Спокойные длинные планы 3-4 сек. Подпись меняется на второй склейке.</span></div>
+        <div class="brow"><span class="bk">Грейдинг</span><span class="bv">Нейтраль, акцент на чистоте линии шва между стеклом и камнем.</span></div>
+      </div>
+    </details>
+    </section>
+<section class="scene">
+      <div class="sc-head">
+        <span class="sc-n">Сцена 07</span>
+        <span class="tc">0:58-1:08</span>
+        <span class="tag tg-gold">ШАГ 6 · ВЫДЕРЖКА</span>
+      </div>
+      <h3 class="sc-title">Через 2-3 дня снимаем оснастку</h3>
+      <p class="sc-narr">Закрываем процесс во времени: герметик набирает прочность, после чего убирают клинья и скотч, заделывают следы.</p>
+      <div class="frames"><div class="fcell"><div class="fr fr-graph"><div class="ov ov-btm"><div class="tl"><div class="tl-step"><span class="tl-dot"></span><span class="tl-lb">установка стекла</span></div><div class="tl-step"><span class="tl-dot"></span><span class="tl-lb">отверждение 2-3 дня</span></div><div class="tl-step"><span class="tl-dot"></span><span class="tl-lb">снимаем оснастку</span></div></div></div></div><div class="cap"><b>7а · 0:58-1:02.</b> Таймлайн выдержки: работать со стелой можно после отверждения.</div></div><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Снимаем клинья и скотч. Швы заделываем.</div></div><div class="fr-lbl">ФУТАЖ: СНИМАЮТ СКОТЧ, ПЛАСТИК, КЛИНЬЯ; ЗАДЕЛЫВАЮТ СЛЕДЫ</div></div><div class="cap"><b>7б · 1:02-1:08.</b> Демонтаж оснастки, отверстия от клиньев заполняют герметиком, излишки срезают лезвием.</div></div></div>
+      <details class="brief">
+      <summary>Режиссёрский бриф: футаж · моушен · грейдинг</summary>
+      <div class="brief-in">
+        <div class="brow"><span class="bk">Футаж</span><span class="bv">Съёмка второго выезда (после выдержки). Если такого футажа нет - fallback на графику-таймлайн + макро чистого шва.</span></div>
+        <div class="brow"><span class="bk">Моушен</span><span class="bv">Таймлайн спокойный. Переход к финалу без резких склеек.</span></div>
+        <div class="brow"><span class="bk">Грейдинг</span><span class="bv">Дневной свет, ровный тон, ощущение завершённой аккуратной работы.</span></div>
+      </div>
+    </details>
+    </section>
+<section class="scene">
+      <div class="sc-head">
+        <span class="sc-n">Сцена 08</span>
+        <span class="tc">1:08-1:15</span>
+        <span class="tag tg-neu">ОПЦИЯ · ВЫСОКИЕ СТЕЛЫ</span>
+      </div>
+      <h3 class="sc-title">Стелу выше 130 см усиливаем столбом</h3>
+      <p class="sc-narr">Полезная деталь для сложных заказов: высокое стекло дополнительно фиксируется боковым гранитным столбом в такой же паз.</p>
+      <div class="frames"><div class="fcell"><div class="fr fr-graph"><div class="ov ov-center"><svg viewBox="0 0 260 150" class="dwg"><rect x="40" y="115" width="180" height="20" class="dw-stone"/><rect x="95" y="35" width="14" height="90" class="dw-glass"/><rect x="150" y="55" width="26" height="80" class="dw-stone"/><rect x="150" y="55" width="9" height="70" class="dw-slot"/><text x="60" y="25" class="dw-t">3 см стекла в подставку</text><text x="175" y="48" class="dw-t">2 см в столб</text></svg></div></div><div class="cap"><b>8а · 1:08-1:12.</b> Схема: боковой столб с пазом. Стекло входит в оба паза (3 см вниз, 2 см вбок).</div></div><div class="fcell"><div class="fr fr-foot"><div class="lt"><div class="lt-bar"></div><div class="lt-txt">Стелу выше 130 см усиливаем боковым столбом.</div></div><div class="fr-lbl">ФУТАЖ: БОКОВОЙ ГРАНИТНЫЙ СТОЛБ РЯДОМ СО СТЕЛОЙ</div></div><div class="cap"><b>8б · 1:12-1:15.</b> Готовая связка стела плюс боковой столб. Общий план.</div></div></div>
+      <details class="brief">
+      <summary>Режиссёрский бриф: футаж · моушен · грейдинг</summary>
+      <div class="brief-in">
+        <div class="brow"><span class="bk">Футаж</span><span class="bv">Если реального футажа со столбом нет - сцену собрать на схеме и одном общем плане готовой связки.</span></div>
+        <div class="brow"><span class="bk">Моушен</span><span class="bv">Схема дорисовывается, размерные подписи всплывают последними.</span></div>
+        <div class="brow"><span class="bk">Грейдинг</span><span class="bv">В тон остальному ролику, без выделения.</span></div>
+      </div>
+    </details>
+    </section>
+<section class="scene">
+      <div class="sc-head">
+        <span class="sc-n">Сцена 09</span>
+        <span class="tc">1:15-1:23</span>
+        <span class="tag tg-neu">ФИНАЛ · КОНТАКТЫ</span>
+      </div>
+      <h3 class="sc-title">Готовая работа и контакты</h3>
+      <p class="sc-narr">Спокойный финал: результат крупно и мягкий призыв. Ролик читается целиком даже без звука.</p>
+      <div class="frames"><div class="fcell"><div class="fr fr-foot"><div class="fr-lbl">ФУТАЖ: ГОТОВАЯ СТЕЛА НА ПРОСВЕТ, СПОКОЙНЫЙ ОБЩИЙ ПЛАН</div></div><div class="cap"><b>9а · 1:15-1:19.</b> Финальный план готового памятника. Свет играет на стекле.</div></div><div class="fcell"><div class="fr fr-title"><div class="ov ov-center"><div class="logo-ph">[ ЛОГОТИП ]</div><div class="ov-sub">[ сайт · телефон · соцсети ]</div><div class="cta-ph">[ призыв: например, «Установим под ваш проект» ]</div></div></div><div class="cap"><b>9б · 1:19-1:23.</b> Финальная плашка: логотип, контакты и мягкий призыв. Держится 4 сек.</div></div></div>
+      <details class="brief">
+      <summary>Режиссёрский бриф: футаж · моушен · грейдинг</summary>
+      <div class="brief-in">
+        <div class="brow"><span class="bk">Футаж</span><span class="bv">Финальный план - лучший кадр готовой работы из отснятого. Не любительский, без людей в отражении.</span></div>
+        <div class="brow"><span class="bk">Моушен</span><span class="bv">Плашка проявляется мягко, контакты читаются спокойно, без анимационных трюков.</span></div>
+        <div class="brow"><span class="bk">Грейдинг</span><span class="bv">Тёплый, но сдержанный финал. Логотип - светлый по графиту.</span></div>
+      </div>
+    </details>
+    </section>
+
+  <hr class="sep">
+
+  <h2>Титры <span class="g">полный список подписей</span></h2>
+  <p class="sub">Готовый источник для субтитров: каждая подпись - одно действие, короткая фраза, без жаргона. Тайминги ориентировочные, подгоняются под реальную длину клипов.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Кадр</th><th>Тайм</th><th>Текст на экране</th><th>Позиция</th></tr></thead>
+    <tbody><tr><td class="mono">1в</td><td class="mono">0:05</td><td>Монтаж стеклянной стелы в подставку</td><td class="dim">Тайтл</td></tr>
+<tr><td class="mono">2а</td><td class="mono">0:08</td><td>Паз режем на станке. Основание ровное.</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">2б</td><td class="mono">0:12</td><td>Ширина паза: стекло плюс 2 мм с каждой стороны</td><td class="dim">Подпись к схеме</td></tr>
+<tr><td class="mono">2в</td><td class="mono">0:15</td><td>Очищаем паз от пыли</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">3а</td><td class="mono">0:19</td><td>Ставим подставку и цветник</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">3б</td><td class="mono">0:23</td><td>Стекло ставим через 2-3 дня</td><td class="dim">Подпись к таймлайну</td></tr>
+<tr><td class="mono">4а</td><td class="mono">0:27</td><td>Наносим полиуретановый герметик по всей длине паза</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">4б</td><td class="mono">0:32</td><td>Стекло в сухой паз не опускаем</td><td class="dim">Акцент-плашка</td></tr>
+<tr><td class="mono">5а</td><td class="mono">0:37</td><td>Ровно, без перекосов опускаем стелу</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">5б</td><td class="mono">0:41</td><td>Выставляем по уровню, фиксируем клиньями</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">6а</td><td class="mono">0:49</td><td>Заполняем паз герметиком</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">6б</td><td class="mono">0:54</td><td>Излишки убираем растворителем</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">7б</td><td class="mono">1:03</td><td>Через 2-3 дня снимаем клинья и скотч</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">8б</td><td class="mono">1:12</td><td>Стелу выше 130 см усиливаем боковым столбом</td><td class="dim">Нижняя треть</td></tr>
+<tr><td class="mono">9б</td><td class="mono">1:20</td><td>[ контакты и призыв ]</td><td class="dim">Финальная плашка</td></tr></tbody>
+  </table></div>
+  <div class="note">Все подписи проверены на понятность для неспециалиста: «пропил» назван «пазом», указан «зазор для расширения», без марок и терминов, которые зритель не обязан знать. Заводское название герметика (Soudal) в титр не выносим - достаточно «полиуретановый герметик».</div>
+
+  <hr class="sep">
+
+  <h2>Asset-matrix <span class="g">сцена → шот → статус</span></h2>
+  <p class="sub">Так как сами видеофайлы я не открывал (папка недоступна из рабочей среды), статус каждого шота - плейсхолдер: подтвердите по папке, отметьте, что нужно доснять, что делаем графикой. Fallback - что ставим, если шота нет.</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Сцена</th><th>Нужный шот</th><th>Статус</th><th>Fallback</th></tr></thead>
+    <tbody><tr><td class="mono">01</td><td>Свет сквозь стекло, гравировка (макро)</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Общий план готовой стелы на просвет</td></tr>
+<tr><td class="mono">01</td><td>Пустой паз в подставке крупно</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Макро дна паза</td></tr>
+<tr><td class="mono">02</td><td>Фрезерный станок режет паз</td><td><span class="st st-d">[доснять / графика]</span></td><td class="dim">Схема-сечение + макро ровного дна</td></tr>
+<tr><td class="mono">02</td><td>Схема сечения паза</td><td><span class="st st-g">Графика</span></td><td class="dim">-</td></tr>
+<tr><td class="mono">02</td><td>Очистка/продувка паза</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Макро чистого паза</td></tr>
+<tr><td class="mono">03</td><td>Установка подставки и цветника</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Общий план собранной подставки</td></tr>
+<tr><td class="mono">03</td><td>Таймлайн 2-3 дня</td><td><span class="st st-g">Графика</span></td><td class="dim">-</td></tr>
+<tr><td class="mono">04</td><td>Нанесение герметика по пазу (макро)</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Крупный план валика герметика</td></tr>
+<tr><td class="mono">04</td><td>Плашка-правило «сухой паз»</td><td><span class="st st-g">Графика</span></td><td class="dim">-</td></tr>
+<tr><td class="mono">05</td><td>Стелу опускают в паз</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">КЛЮЧЕВОЙ шот, обязателен</td></tr>
+<tr><td class="mono">05</td><td>Уровень + клинья (макро)</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Макро кромки со стеклом</td></tr>
+<tr><td class="mono">05</td><td>Фиксация пластиком и скотчем</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Деталь бокового зазора</td></tr>
+<tr><td class="mono">06</td><td>Заполнение паза герметиком</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Макро шва</td></tr>
+<tr><td class="mono">06</td><td>Заглаживание, снятие излишков</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Чистая линия стыка</td></tr>
+<tr><td class="mono">07</td><td>Демонтаж оснастки после выдержки</td><td><span class="st st-d">[доснять]</span></td><td class="dim">Графика-таймлайн + макро чистого шва</td></tr>
+<tr><td class="mono">08</td><td>Боковой столб (схема + план)</td><td><span class="st st-c">[подтвердить / графика]</span></td><td class="dim">Только схема, если футажа нет</td></tr>
+<tr><td class="mono">09</td><td>Готовая работа, финальный план</td><td><span class="st st-c">[подтвердить по папке]</span></td><td class="dim">Лучший общий план из отснятого</td></tr>
+<tr><td class="mono">09</td><td>Финальная плашка контактов</td><td><span class="st st-g">Графика</span></td><td class="dim">-</td></tr></tbody>
+  </table></div>
+
+  <hr class="sep">
+
+  <h2>Граф-кит <span class="g">цвет · шрифт · титры</span></h2>
+  <div class="spec">
+    <div class="box">
+      <h4>Палитра (сдержанная, мемориальная)</h4>
+      <div class="swatches">
+        <div class="sw"><div class="box-c" style="background:#16181C"></div><div class="hx">#16181C</div><div class="nm">графит / фон плашек</div></div>
+        <div class="sw"><div class="box-c" style="background:#F3F1EC"></div><div class="hx">#F3F1EC</div><div class="nm">титры / текст</div></div>
+        <div class="sw"><div class="box-c" style="background:#C2A878"></div><div class="hx">#C2A878</div><div class="nm">акцент / линия</div></div>
+        <div class="sw"><div class="box-c" style="background:#A8A7A2"></div><div class="hx">#A8A7A2</div><div class="nm">подписи 2-го плана</div></div>
+      </div>
+      <ul>
+        <li><b>Нижняя треть:</b> тёмная подложка-градиент снизу, короткая акцентная черта #C2A878, текст белый.</li>
+        <li>Логотип - <b>плейсхолдер</b>, пришлите SVG/PNG. Ставим светлым по графиту.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>Шрифт Inter</h4>
+      <ul>
+        <li><b>Титр действия:</b> Inter SemiBold, 40-46 px (по высоте кадра 1080), 1-2 строки.</li>
+        <li><b>Подпись 2-го плана:</b> Inter Medium, 24-28 px, цвет #A8A7A2.</li>
+        <li><b>Акцент-плашка:</b> Inter Bold, кегль на 10% крупнее титра.</li>
+        <li>Межбуквенное: 0 для основного, +0.14em для мелких капс-подписей.</li>
+        <li>Титр <b>не длиннее 9 слов</b>, одна мысль. Без длинного тире, только дефис.</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="sep">
+
+  <h2>Музыка <span class="g">и звук</span></h2>
+  <div class="spec">
+    <div class="box"><h4>Характер</h4><ul>
+      <li><b>Тип:</b> спокойное фортепиано или мягкие струнные / эмбиент-пэды, без ударных и без нарастаний-«дропов».</li>
+      <li><b>Темп:</b> 60-72 BPM, ровный, без резкой динамики.</li>
+      <li><b>Тональность:</b> нейтральная, не мрачная и не бодрая. Уважительный фон.</li>
+    </ul></div>
+    <div class="box"><h4>Технически</h4><ul>
+      <li><b>Громкость:</b> фон -18…-22 LUFS, чтобы не перебивал восприятие. Ролик всё равно читается без звука.</li>
+      <li><b>Лицензия:</b> <b>[ плейсхолдер ]</b> - нужен трек с правами на коммерческое использование. Референс/трек пришлите или подберём.</li>
+      <li><b>SFX:</b> опционально тихие натуральные звуки (щелчок уровня, шпатель) очень приглушённо. Голоса за кадром нет.</li>
+    </ul></div>
+  </div>
+
+  <hr class="sep">
+
+  <h2>Техтребования <span class="g">экспорт</span></h2>
+  <div class="spec">
+    <div class="box"><h4>Видео</h4><ul>
+      <li><b>Мастер:</b> 3840×2160 (4K) или 1920×1080, 16:9.</li>
+      <li><b>Кадр/сек:</b> 25 или 30 fps, единый по всему ролику.</li>
+      <li><b>Кодек:</b> H.264 (mp4), высокий битрейт; ProRes для мастера при наличии.</li>
+      <li><b>Титры:</b> вшиваются в картинку; отдельно отдать .srt для соцсетей.</li>
+    </ul></div>
+    <div class="box"><h4>Правила кадра</h4><ul>
+      <li><b>Safe-zone:</b> титры и логотип в пределах 90% кадра от краёв.</li>
+      <li><b>Читается без звука:</b> каждое действие имеет титр, финал - контакты текстом.</li>
+      <li><b>9:16:</b> при необходимости версия для сторис - кадрировать по центру, титры перенабрать крупнее.</li>
+      <li>Никаких водяных знаков, любительских или захламлённых планов в финальной сборке.</li>
+    </ul></div>
+  </div>
+
+  <hr class="sep">
+
+  <h2>Приложение <span class="g">альтернативный способ</span></h2>
+  <div class="note"><b>Крепёж через отверстия в стекле</b> (из первого документа) - отдельный метод: на памятнике размечают отверстия, бурят, ставят дюбели, стекло крепят метизами через силиконовые прокладки, «не пережимая» стекло. В этот ролик <b>не входит</b>. Если нужен второй ролик или короткая вставка про этот способ - соберу отдельным ТЗ на том же макете. Также в первом документе описаны реставрационная накладка, фото на камень, установка цветника и ограждений - это самостоятельные сюжеты, не смешиваем их с монтажом стелы.</div>
+
+  <hr class="sep">
+
+  <h2>Changelog <span class="g">факты · плейсхолдеры · что нужно от вас</span></h2>
+  <div class="log">
+    <div class="li"><div class="lh ok">Принято за факт (из ваших документов)</div><p>Последовательность установки в пропил, глубина паза 3-9 см, зазор 2 мм с каждой стороны, порядок «подставка и цветник → 2-3 дня → стекло», полиуретановый герметик, фиксация клиньями/уровнем/скотчем, выдержка 2-3 дня, усиление боковым столбом для стёкол выше 130 см (3 см в подставку, 2 см в столб).</p></div>
+    <div class="li"><div class="lh ph">Поставил плейсхолдером</div><p>Логотип, контакты и финальный CTA; аудитория и площадка показа; музыкальный трек и лицензия; точная привязка каждого титра к конкретному видеофайлу (папку не открыть из среды). Хронометраж ~80 сек - расчётный, подгонится под реальную длину клипов.</p></div>
+    <div class="li"><div class="lh ask">Нужно от вас, чтобы финализировать</div><p>1) Залейте сами видеоклипы сюда (или zip) - тогда сверю ракурсы с asset-matrix, соберу точный монтажный список и .srt, а при готовности - черновую сборку (ffmpeg в среде уже есть). 2) Логотип (SVG/PNG) и контакты для финальной плашки. 3) Аудитория и площадка (соцсети / сайт / обучение). 4) Музыка: свой трек или подобрать.</p></div>
+  </div>
+
+  <footer class="foot">ТЗ подготовлено по документам «Способы монтажа» и «Установка в пропил». Все титры проверены на понятность для неспециалиста и на отсутствие рекламных штампов. Длинное тире не используется.</footer>
+</main>
+<script>
+(function(){
+  var r=document.documentElement, b=document.getElementById('themeBtn');
+  function cur(){return r.getAttribute('data-theme')|| (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+  b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);b.textContent=n==='dark'?'Светлая тема':'Тёмная тема';});
+  document.getElementById('expandAll').addEventListener('click',function(){
+    var ds=document.querySelectorAll('details.brief');var any=[].some.call(ds,function(d){return !d.open;});
+    [].forEach.call(ds,function(d){d.open=any;});this.textContent=any?'Свернуть все брифы':'Развернуть все брифы';
+  });
+})();
+</script>
+</body>
+</html>
