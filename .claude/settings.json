@@ -1,0 +1,29 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-settings.json",
+  "extraKnownMarketplaces": {
+    "humanizer": {
+      "source": { "source": "github", "repo": "blader/humanizer" }
+    },
+    "aaron": {
+      "source": { "source": "github", "repo": "aaron-he-zhu/seo-geo-claude-skills" }
+    },
+    "proofloop": {
+      "source": { "source": "github", "repo": "sattyamjjain/verdict" }
+    },
+    "claude-code-plugins": {
+      "source": { "source": "github", "repo": "anthropics/claude-code" }
+    },
+    "designer-skills": {
+      "source": { "source": "github", "repo": "Owl-Listener/designer-skills" }
+    }
+  },
+  "enabledPlugins": {
+    "humanizer@humanizer": true,
+    "aaron-seo-geo@aaron": true,
+    "proofloop@proofloop": true,
+    "frontend-design@claude-code-plugins": true,
+    "design-systems@designer-skills": true,
+    "ui-design@designer-skills": true,
+    "visual-critique@designer-skills": true
+  }
+}
