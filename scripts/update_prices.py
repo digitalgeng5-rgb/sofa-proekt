@@ -15,7 +15,7 @@
 
 Запуск:  python3 scripts/update_prices.py
 """
-import os, re, shutil, warnings
+import colorsys, os, re, shutil, warnings
 warnings.filterwarnings('ignore')
 
 import pandas as pd
@@ -58,6 +58,7 @@ SKIPPED = [dict(partner='М&M', file='М&M (1) (6).xlsx',
 CYR_TO_LAT = str.maketrans('АВЕКМНОРСТУХІЁЗ', 'ABEKMHOPCTYXIEE')
 
 ST_UPDATED = 'Обновлена по зелёной цене'
+ST_RED = 'Зелёная, но строка помечена красным — не трогали'
 ST_GREEN_SAME = 'Зелёная, но цена уже совпадала'
 ST_NOT_GREEN = 'Есть в прайсе, но не зелёная — не трогали'
 ST_ABSENT = 'Нет в прайсе — оставлена старая цена'
@@ -97,6 +98,79 @@ def to_number(v):
         return float(s)
     except ValueError:
         return None
+
+
+def is_red_rgb(rgb):
+    """Красный/розовый оттенок заливки. Оранжевый, жёлтый, зелёный, серый — нет.
+
+    Определяем по тону (HSV), а не по списку цветов: в трёх фидах используются
+    четыре разных красных оттенка (#FF8080, #FF99CC, #D99594, #F4CCCC).
+    """
+    if not rgb:
+        return False
+    r, g, b = (c / 255 for c in rgb)
+    h, sat, val = colorsys.rgb_to_hsv(r, g, b)
+    hue = h * 360
+    return (hue <= 20 or hue >= 320) and sat >= 0.05 and val >= 0.25
+
+
+def xls_red_rows(book, sheet, header, ncols):
+    """Номера строк .xls, залитых красным (не менее половины колонок с данными)."""
+    red = set()
+    for r in range(header + 1, sheet.nrows):
+        n = 0
+        for c in range(ncols):
+            xf = book.xf_list[sheet.cell_xf_index(r, c)]
+            if xf.background.fill_pattern != 1:
+                continue
+            if is_red_rgb(book.colour_map.get(xf.background.pattern_colour_index)):
+                n += 1
+        if n * 2 >= ncols:
+            red.add(r)
+    return red
+
+
+def xlsx_red_rows(ws, header, ncols):
+    """Номера строк .xlsx (1-based), залитых красным."""
+    red = set()
+    for r in range(header + 2, ws.max_row + 1):
+        n = 0
+        for c in range(1, ncols + 1):
+            fl = ws.cell(r, c).fill
+            if not (fl and fl.patternType):
+                continue
+            rgb = getattr(fl.fgColor, 'rgb', None)
+            if isinstance(rgb, str) and len(rgb) == 8 and is_red_rgb(
+                    tuple(int(rgb[i:i + 2], 16) for i in (2, 4, 6))):
+                n += 1
+        if n * 2 >= ncols:
+            red.add(r)
+    return red
+
+
+def scan_row_fills(feed, src):
+    """Разбор заливок строк фида: какие цвета встречаются и сколько строк каждым."""
+    from collections import Counter
+    counts = Counter()
+    if feed['kind'] == 'xls':
+        bk = xlrd.open_workbook(src, formatting_info=True)
+        sh = bk.sheet_by_index(feed['sheet_idx'])
+        for r in range(feed['header'] + 1, sh.nrows):
+            xf = bk.xf_list[sh.cell_xf_index(r, 0)]
+            rgb = bk.colour_map.get(xf.background.pattern_colour_index) if xf.background.fill_pattern == 1 else None
+            counts['%02X%02X%02X' % rgb if rgb else 'без заливки'] += 1
+    else:
+        ws = openpyxl.load_workbook(src)[feed['sheet']]
+        for r in range(feed['header'] + 2, ws.max_row + 1):
+            fl = ws.cell(r, 1).fill
+            rgb = getattr(fl.fgColor, 'rgb', None) if fl and fl.patternType else None
+            counts[rgb[2:] if isinstance(rgb, str) and len(rgb) == 8 else 'тема/без заливки'] += 1
+    out = []
+    for colour, n in counts.most_common():
+        red = (len(colour) == 6 and is_red_rgb(tuple(int(colour[i:i + 2], 16) for i in (0, 2, 4))))
+        out.append({'Партнёр': feed['partner'], 'Заливка строки': '#' + colour if len(colour) == 6 else colour,
+                    'Строк': n, 'Считается красной': 'да' if red else 'нет'})
+    return out
 
 
 def is_green(cell):
@@ -164,7 +238,7 @@ def load_price(path):
     return green_map, full_map, info, collisions, warns
 
 
-def _record(feed, row_no, raw, art, old, green_map, full_map):
+def _record(feed, row_no, raw, art, old, green_map, full_map, red=False):
     g = green_map.get(art)
     f = full_map.get(art)
     new = g[0] if g else None
@@ -176,10 +250,12 @@ def _record(feed, row_no, raw, art, old, green_map, full_map):
         status, applied = ST_NOT_GREEN, None
     elif new == old:
         status, applied = ST_GREEN_SAME, None
+    elif red:
+        status, applied = ST_RED, None
     else:
         status, applied = ST_UPDATED, new
     delta = pct = None
-    if status == ST_UPDATED:
+    if status in (ST_UPDATED, ST_RED):
         delta = new - old
         pct = delta / old if old else None
     src = f'{g[1]} r{g[2]}' if g else (f'{f[1]} r{f[2]}' if f else '')
@@ -196,6 +272,7 @@ def process_xls(feed, green_map, full_map, src, dst):
     rs = rb.sheet_by_index(feed['sheet_idx'])
     wb = xlcopy(rb)
     ws = wb.get_sheet(feed['sheet_idx'])
+    red_rows = xls_red_rows(rb, rs, feed['header'], rs.ncols)
     rows = []
     for r in range(feed['header'] + 1, rs.nrows):
         raw = rs.cell_value(r, feed['article'])
@@ -203,7 +280,7 @@ def process_xls(feed, green_map, full_map, src, dst):
         if art is None:
             continue
         old = to_number(rs.cell_value(r, feed['price']))
-        rec, applied = _record(feed, r + 1, raw, art, old, green_map, full_map)
+        rec, applied = _record(feed, r + 1, raw, art, old, green_map, full_map, r in red_rows)
         rows.append(rec)
         if applied is not None:
             # xlwt.write() сбрасывает оформление, поэтому запоминаем индекс стиля
@@ -221,6 +298,7 @@ def process_xls(feed, green_map, full_map, src, dst):
 def process_xlsx(feed, green_map, full_map, src, dst):
     wb = openpyxl.load_workbook(src)
     ws = wb[feed['sheet']]
+    red_rows = xlsx_red_rows(ws, feed['header'], ws.max_column)
     rows = []
     for r in range(feed['header'] + 2, ws.max_row + 1):
         raw = ws.cell(r, feed['article'] + 1).value
@@ -229,7 +307,7 @@ def process_xlsx(feed, green_map, full_map, src, dst):
             continue
         cell = ws.cell(r, feed['price'] + 1)
         old = to_number(cell.value)
-        rec, applied = _record(feed, r, raw, art, old, green_map, full_map)
+        rec, applied = _record(feed, r, raw, art, old, green_map, full_map, r in red_rows)
         rows.append(rec)
         if applied is not None:
             cell.value = applied      # стиль ячейки openpyxl сохраняет сам
@@ -289,7 +367,7 @@ def _dump(wb, title, df, money=(), pct=(), zebra=None, note=None):
                     ws.cell(i, j).fill = fill
 
 
-def build_report(all_rows, green_map, full_map, sheet_info, collisions, warns, dst):
+def build_report(all_rows, green_map, full_map, sheet_info, collisions, warns, red_info, dst):
     df = pd.DataFrame(all_rows)
     wb = openpyxl.Workbook()
     wb.remove(wb.active)
@@ -299,16 +377,18 @@ def build_report(all_rows, green_map, full_map, sheet_info, collisions, warns, d
         summary.append({'Партнёр': partner, 'Файл': g['Файл'].iloc[0], 'Лист': g['Лист'].iloc[0],
                         'Всего позиций': len(g),
                         'Обновлено': int((g['Статус'] == ST_UPDATED).sum()),
+                        'Пропущено (красная строка)': int((g['Статус'] == ST_RED).sum()),
                         'Зелёная, цена совпадала': int((g['Статус'] == ST_GREEN_SAME).sum()),
                         'В прайсе, но не зелёная': int((g['Статус'] == ST_NOT_GREEN).sum()),
                         'Нет в прайсе': int((g['Статус'] == ST_ABSENT).sum()),
                         'Без старой цены': int((g['Статус'] == ST_NOPRICE).sum())})
     for s in SKIPPED:
         summary.append({'Партнёр': s['partner'], 'Файл': s['file'], 'Лист': '—', 'Всего позиций': 18,
-                        'Обновлено': 0, 'Зелёная, цена совпадала': '—', 'В прайсе, но не зелёная': '—',
+                        'Обновлено': 0, 'Пропущено (красная строка)': 0, 'Зелёная, цена совпадала': '—', 'В прайсе, но не зелёная': '—',
                         'Нет в прайсе': '—', 'Без старой цены': 'нет артикулов'})
     _dump(wb, 'Сводка', pd.DataFrame(summary),
-          note='Обновлялись только цены, подсвеченные в прайсе зелёным. Прочие поля фидов не изменялись.')
+          note='Обновлялись только цены, подсвеченные в прайсе зелёным, и только в строках, '
+               'НЕ помеченных красным в самом фиде. Прочие поля фидов не изменялись.')
 
     cols = ['Партнёр', 'Файл', 'Лист', 'Строка', 'Артикул (исходный)', 'Артикул (норм.)',
             'Старая цена', 'Новая цена', 'Дельта', 'Дельта %', 'Источник в прайсе']
@@ -317,6 +397,12 @@ def build_report(all_rows, green_map, full_map, sheet_info, collisions, warns, d
     _dump(wb, 'Расхождения', diff, money=('Старая цена', 'Новая цена', 'Дельта'),
           pct=('Дельта %',), zebra='Дельта',
           note='Строки, где цена в фиде изменена. Розовый — цена выросла, зелёный — снизилась.')
+
+    red = df[df['Статус'] == ST_RED][cols].copy()
+    _dump(wb, 'Пропущено — красные строки', red,
+          money=('Старая цена', 'Новая цена', 'Дельта'), pct=('Дельта %',),
+          note='В прайсе цена подсвечена зелёным, но строка помечена красным в самом фиде — '
+               'по договорённости не меняли. Колонка «Новая цена» показывает, что было бы применено.')
 
     absent = df[df['Статус'] == ST_ABSENT][['Партнёр', 'Файл', 'Лист', 'Строка',
                                             'Артикул (исходный)', 'Артикул (норм.)', 'Старая цена']]
@@ -359,6 +445,10 @@ def build_report(all_rows, green_map, full_map, sheet_info, collisions, warns, d
     _dump(wb, 'Зелёные — нет в фидах', unused, money=('Новая цена',),
           note='Позиции с новой (зелёной) ценой, которых нет ни в одном обработанном фиде.')
 
+    _dump(wb, 'Красная разметка фидов', pd.DataFrame(red_info),
+          note='Заливки строк, распознанные как «красные» (тон HSV ≤20° или ≥320°, насыщенность ≥0,05). '
+               'Оранжевые, жёлтые, зелёные и серые пометки красными не считаются.')
+
     _dump(wb, 'Разбор прайса', pd.DataFrame(sheet_info),
           note=f'Зелёная заливка #{GREEN[2:]}. Всего артикулов с новой ценой: {len(green_map)}; '
                f'всего артикулов в прайсе: {len(full_map)}.')
@@ -372,7 +462,8 @@ def build_report(all_rows, green_map, full_map, sheet_info, collisions, warns, d
     _dump(wb, 'Параметры прогона', pd.DataFrame([
         {'Параметр': 'Файл прайса', 'Значение': PRICE_FILE},
         {'Параметр': 'Что обновляли', 'Значение': f'только цены с зелёной заливкой #{GREEN[2:]} в колонке «ЕРЦ»'},
-        {'Параметр': 'Что не меняли', 'Значение': 'все остальные поля фидов — без изменений'},
+        {'Параметр': 'Что не меняли', 'Значение': 'все остальные поля фидов — без изменений; '
+                                                  'строки, помеченные красным в фиде, пропущены'},
         {'Параметр': 'Нормализация артикула', 'Значение': 'trim, схлопывание пробелов (вкл. NBSP), UPPER, срез ведущих нулей'},
         {'Параметр': 'Многострочные артикулы', 'Значение': 'ячейка «Артикул» разбивается по переводу строки; все артикулы строки получают её цену «ЕРЦ»'},
         {'Параметр': 'Округление', 'Значение': 'не применялось — цена перенесена как в прайсе'},
@@ -392,21 +483,23 @@ def main():
         print('  ! ' + w)
 
     os.makedirs(OUT_DIR, exist_ok=True)
-    all_rows = []
+    all_rows, red_info = [], []
     for feed in FEEDS:
         src = os.path.join(FEEDS_DIR, feed['file'])
         dst = os.path.join(OUT_DIR, feed['file'])
+        red_info += scan_row_fills(feed, src)
         fn = process_xls if feed['kind'] == 'xls' else process_xlsx
         rows = fn(feed, green_map, full_map, src, dst)
         all_rows += rows
         upd = sum(1 for r in rows if r['Статус'] == ST_UPDATED)
-        print(f"  {feed['partner']:22s} позиций {len(rows):4d} | обновлено {upd:4d}")
+        skip = sum(1 for r in rows if r['Статус'] == ST_RED)
+        print(f"  {feed['partner']:22s} позиций {len(rows):4d} | обновлено {upd:4d} | пропущено (красные) {skip:3d}")
     for s in SKIPPED:
         shutil.copy2(os.path.join(FEEDS_DIR, s['file']), os.path.join(OUT_DIR, s['file']))
         print(f"  {s['partner']:22s} скопирован без изменений")
 
     rep = os.path.join(OUT_DIR, 'Сверка цен.xlsx')
-    build_report(all_rows, green_map, full_map, sheet_info, collisions, warns, rep)
+    build_report(all_rows, green_map, full_map, sheet_info, collisions, warns, red_info, rep)
     print(f'Готово: {OUT_DIR}/ + {rep}')
 
 
