@@ -1,0 +1,43 @@
+{
+  "extraKnownMarketplaces": {
+    "humanizer": {
+      "source": {
+        "source": "github",
+        "repo": "blader/humanizer"
+      }
+    },
+    "aaron": {
+      "source": {
+        "source": "github",
+        "repo": "aaron-he-zhu/seo-geo-claude-skills"
+      }
+    },
+    "proofloop": {
+      "source": {
+        "source": "github",
+        "repo": "sattyamjjain/verdict"
+      }
+    },
+    "claude-code-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-code"
+      }
+    },
+    "designer-skills": {
+      "source": {
+        "source": "github",
+        "repo": "Owl-Listener/designer-skills"
+      }
+    }
+  },
+  "enabledPlugins": [
+    "humanizer@humanizer",
+    "aaron-seo-geo@aaron",
+    "proofloop@proofloop",
+    "frontend-design@claude-code-plugins",
+    "design-systems@designer-skills",
+    "ui-design@designer-skills",
+    "visual-critique@designer-skills"
+  ]
+}
